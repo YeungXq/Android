@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_about_us"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              tools:context=".Activity.UserItemActivity.AboutUs">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp">
+
+        <ImageView
+            android:layout_width="45sp"
+            android:layout_height="45sp"
+            android:src="@drawable/developer"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="18sp"
+                android:text="设计者"
+                android:textColor="#00Bfff"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:lineSpacingExtra="18sp"
+                android:textColor="#00Bfff"
+                android:text="YangXiaoQuan"
+                android:textSize="14sp"
+                android:textStyle="normal|bold|italic"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp">
+
+        <ImageView
+            android:layout_width="45sp"
+            android:layout_height="45sp"
+            android:src="@drawable/edition"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="18sp"
+                android:text="版本"
+                android:textColor="#00Bfff"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:lineSpacingExtra="18sp"
+                android:textColor="#00Bfff"
+                android:text="最新版本:v1.0"
+                android:textSize="14sp"
+                android:textStyle="normal|bold|italic"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp">
+
+        <ImageView
+            android:layout_width="45sp"
+            android:layout_height="45sp"
+            android:src="@drawable/type"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="18sp"
+                android:text="项目类型"
+                android:textColor="#00BFFF"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:textColor="#00Bfff"
+                android:lineSpacingExtra="18sp"
+                android:text="博客"
+                android:textSize="14sp"
+                android:textStyle="normal|bold|italic"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
