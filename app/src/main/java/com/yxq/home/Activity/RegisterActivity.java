@@ -57,21 +57,21 @@ public class RegisterActivity extends BaseActivity {
                 String registerPassword = registerUserPassword.getText().toString();
                 String confirmPassword = registerConfirmUserPassword.getText().toString();
                 Cursor cursor = null;
-                cursor = db.rawQuery("select * from user where userId = ?",new String[]{registerId});
-                if (cursor != null  && cursor.moveToFirst()){
-                    if (!registerId.equals("") && !registerPassword.equals("") && confirmPassword.equals(registerPassword)){
-                        Toast.makeText(RegisterActivity.this, "用户已存在！", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
+                cursor = db.rawQuery("select * from user where userId = ?", new String[]{registerId});
+                if (cursor != null && cursor.moveToFirst()) {
+                    Toast.makeText(RegisterActivity.this, "用户已存在！", Toast.LENGTH_SHORT).show();
+                } else if (!registerId.equals("") && !registerPassword.equals("") && confirmPassword.equals(registerPassword)) {
                     ContentValues values = new ContentValues();
                     // 开始组装第二条数据
                     values.put("userId", registerId);
                     values.put("password", registerPassword);
                     db.insert("user", null, values);
-                    Log.d("RegisterActivity","注册成功");
+                    Log.d("RegisterActivity", "注册成功");
                     Toast.makeText(RegisterActivity.this, "注册成功！跳转登录页面", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
+                } else {
+                    Toast.makeText(RegisterActivity.this, "有空值或两次密码输入不一致", Toast.LENGTH_SHORT).show();
                 }
                 cursor.close();
             }
