@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,7 @@ public class DynamicFragment extends Fragment {
     private View view;
     private SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private FloatingActionButton btn_add;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private Activity activity;
 
@@ -63,8 +65,16 @@ public class DynamicFragment extends Fragment {
             initMemorandumData();
             flag = false;
         }
-
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dynamicList.clear();
+                initRecyclerView();
+                initMemorandumData();
+                //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         return view;
     }
 
@@ -76,6 +86,9 @@ public class DynamicFragment extends Fragment {
                 showAddDialog();
             }
         });
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+
+
     }
 
     protected void showAddDialog() {
