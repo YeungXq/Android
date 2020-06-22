@@ -40,7 +40,7 @@ public class LoginActivity extends BaseActivity {
         initEvent();
 
         //new一个数据库类的对象，并且指定数据库的名称，版本号
-        dbHelper = new MyDatabaseHelper(this, "UserStore", null, 2);
+        dbHelper = new MyDatabaseHelper(this, "UserStore", null, 3);
         //获取一个数据库的实例 。数据库存在，打开数据库；数据库不存在，创建数据库并打开
         dbHelper.getWritableDatabase();
 
@@ -103,6 +103,7 @@ public class LoginActivity extends BaseActivity {
                             Toast.LENGTH_SHORT).show();
                 }
                 cursor.close();
+                db.close();
             }
         });
 

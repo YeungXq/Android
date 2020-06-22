@@ -27,12 +27,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "id integer primary key autoincrement, "
             + "time datetime, "
             + "message text)";
+    public static final String CREATE_ARTICLE = "create table article ("
+            + "id integer primary key autoincrement, "
+            + "title text, "
+            + "time datetime, "
+            + "url text)";
+
     //创建数据库:当相同版本的数据库BookStore已经存在了，则MyDatabaseHelper中的onCreate()方法就不会执行了。
     @Override
     public void onCreate(SQLiteDatabase db) {
         //执行创建表的SQL命名
         db.execSQL(CREATE_BOOK);
-      //  Toast.makeText(mContext, "Create succeeded", Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(mContext, "Create succeeded", Toast.LENGTH_SHORT).show();
     }
 
     //升级数据库
@@ -43,6 +49,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 db.execSQL(CREATE_MESSAGE);
                 break;
             case 2:
+                db.execSQL(CREATE_ARTICLE);
                 break;
             default:
         }

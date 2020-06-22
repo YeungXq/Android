@@ -34,7 +34,7 @@ public class RegisterActivity extends BaseActivity {
         initEvent();
 
         //new一个数据库类的对象，并且指定数据库的名称，版本号
-        dbHelper = new MyDatabaseHelper(this, "UserStore", null, 2);
+        dbHelper = new MyDatabaseHelper(this, "UserStore", null, 3);
 
         //设置进入登录页面的TextView为可点击
         loginBtn.setClickable(true);
@@ -74,6 +74,7 @@ public class RegisterActivity extends BaseActivity {
                     Toast.makeText(RegisterActivity.this, "有空值或两次密码输入不一致", Toast.LENGTH_SHORT).show();
                 }
                 cursor.close();
+                db.close();
             }
         });
     }

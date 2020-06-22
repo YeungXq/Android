@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.yxq.home.Activity.UserItemActivity.QueryInfo;
 import com.yxq.home.Adapter.DynamicAdapter;
 import com.yxq.home.DataBase.MyDatabaseHelper;
 import com.yxq.home.Model.DynamicItem;
@@ -58,20 +57,22 @@ public class DynamicFragment extends Fragment {
 
         activity = getActivity();
         //new一个数据库类的对象，并且指定数据库的名称，版本号
-        dbHelper = new MyDatabaseHelper(activity, "UserStore", null, 2);
+        dbHelper = new MyDatabaseHelper(activity, "UserStore", null, 3);
         initView();
         initRecyclerView();  //初始化RecyclerView 并发送数据与视图
         if (flag) {
             initMemorandumData();
             flag = false;
         }
+
+        //下拉刷新功能
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 dynamicList.clear();
                 initRecyclerView();
                 initMemorandumData();
-                //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
+                //数据重新加载完成后，设置现在不在刷新
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -101,6 +102,7 @@ public class DynamicFragment extends Fragment {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
+                //将信息保存到数据库
                 if (!editText.getText().toString().equals("")) {
                     ContentValues values = new ContentValues();
                     values.put("time", sdfDate.format(new Date()));
@@ -109,6 +111,7 @@ public class DynamicFragment extends Fragment {
                 } else {
                     Toast.makeText(activity, "内容不能为空！", Toast.LENGTH_SHORT).show();
                 }
+                db.close();
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -155,6 +158,7 @@ public class DynamicFragment extends Fragment {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
     }
 
 }

@@ -46,12 +46,14 @@ public class QueryInfo extends BaseActivity {
     private String passWord;
     boolean flag = false;
 
+    String retain = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_queryinfo);
         //new一个数据库类的对象，并且指定数据库的名称，版本号
-        dbHelper = new MyDatabaseHelper(this, "UserStore", null, 2);
+        dbHelper = new MyDatabaseHelper(this, "UserStore", null, 3);
         //获取一个数据库的实例 。数据库存在，打开数据库；数据库不存在，创建数据库并打开
         dbHelper.getWritableDatabase();
 
@@ -77,6 +79,7 @@ public class QueryInfo extends BaseActivity {
                         passWord = cursor.getString(cursor.getColumnIndex("password"));
                     }
                     cursor.close();
+                    db.close();
                     passWordView.setText(passWord);
                     flag = true;
                 } else {
@@ -105,6 +108,10 @@ public class QueryInfo extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("修改密码");
         builder.setView(textEntryView);
+        //原密码正确但修改不成功时再次点击修改密码自动填充原密码
+        if (!retain.equals("")){
+            oldPassword.setText(retain);
+        }
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -113,22 +120,32 @@ public class QueryInfo extends BaseActivity {
                 if (cursor != null && cursor.moveToFirst()) {
                     String checkPassword = cursor.getString(cursor.getColumnIndex("password"));
                     if (oldPassword.getText().toString().equals(checkPassword)) {
-                        if (newPassword.getText().toString().equals(confirmPassword.getText().toString())) {
-                            ContentValues values = new ContentValues();
-                            //put的内容是要修改的字段
-                            values.put("password", newPassword.getText().toString());
-                            //方法一
-                            //第一个参数：表名;第二个参数：values;第三个参数：where条件;第四格参数：where条件对应字段值
-                            db.update("user", values, "userId = ?", new String[]{id});
-                            Toast.makeText(QueryInfo.this, "修改成功！", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(QueryInfo.this, "两次密码输入不一致！", Toast.LENGTH_SHORT).show();
+                        if (!newPassword.getText().toString().equals("")){
+                            if (newPassword.getText().toString().equals(confirmPassword.getText().toString())) {
+                                ContentValues values = new ContentValues();
+                                //put的内容是要修改的字段
+                                values.put("password", newPassword.getText().toString());
+                                //方法一
+                                //第一个参数：表名;第二个参数：values;第三个参数：where条件;第四格参数：where条件对应字段值
+                                db.update("user", values, "userId = ?", new String[]{id});
+                                Toast.makeText(QueryInfo.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                                retain = "";
+                            } else {
+                                Toast.makeText(QueryInfo.this, "两次密码输入不一致！", Toast.LENGTH_SHORT).show();
+                                //保存原密码
+                                retain  = oldPassword.getText().toString();
+                            }
+                        }else {
+                            Toast.makeText(QueryInfo.this, "新密码不能为空！", Toast.LENGTH_SHORT).show();
+                            //保存原密码
+                            retain  = oldPassword.getText().toString();
                         }
                     } else {
                         Toast.makeText(QueryInfo.this, "原密码错误！", Toast.LENGTH_SHORT).show();
                     }
                 }
                 cursor.close();
+                db.close();
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
