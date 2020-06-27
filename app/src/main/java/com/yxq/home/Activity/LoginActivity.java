@@ -82,12 +82,15 @@ public class LoginActivity extends BaseActivity {
                     if (checkPassword.equals(password)){
                         edit = share.edit();
                         if (checkBox.isChecked()){
-                            edit.putString("name",id).commit();
-                            edit.putString("password",password).commit();
+                            edit.putString("name",id);
+                            edit.putString("password",password);
                             edit.putBoolean("isRemember",true);
                             edit.commit();
                         }else {
-                            edit.clear();
+                            edit.putString("name", "");
+                            edit.putString("password", "");
+                            edit.putBoolean("isRemember",false);
+                            edit.commit();
                         }
                         Toast.makeText(LoginActivity.this, "登陆成功！", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
